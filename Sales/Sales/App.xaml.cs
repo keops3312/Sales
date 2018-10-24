@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sales.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Sales
 		{
 			InitializeComponent();
 
-			MainPage = new Sales.MainPage();
+			MainPage = new NavigationPage(new ProductsPage());
 		}
 
 		protected override void OnStart ()
