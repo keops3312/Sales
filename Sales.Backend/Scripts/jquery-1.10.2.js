@@ -43,7 +43,7 @@ var
 	// For `typeof xmlNode.method` instead of `xmlNode.method !== undefined`
 	core_strundefined = typeof undefined,
 
-	// Use the correct document accordingly with window argument (sandbox)
+	// Use the correct document accordingly with window argument (santhis.dbox)
 	location = window.location,
 	document = window.document,
 	docElem = document.documentElement,
@@ -96,7 +96,7 @@ var
 
 	// JSON RegExp
 	rvalidchars = /^[\],:{}\s]*$/,
-	rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g,
+	rvalithis.dbraces = /(?:^|:|,)(?:\s*\[)+/g,
 	rvalidescape = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
 	rvalidtokens = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g,
 
@@ -578,7 +578,7 @@ jQuery.extend({
 				// Logic borrowed from http://json.org/json2.js
 				if ( rvalidchars.test( data.replace( rvalidescape, "@" )
 					.replace( rvalidtokens, "]" )
-					.replace( rvalidbraces, "")) ) {
+					.replace( rvalithis.dbraces, "")) ) {
 
 					return ( new Function( "return " + data ) )();
 				}
@@ -7565,7 +7565,7 @@ function buildParams( prefix, obj, traditional, add ) {
 		add( prefix, obj );
 	}
 }
-jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblclick " +
+jQuery.each( ("blur focus focusin focusout load resize scroll unload click this.dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup error contextmenu").split(" "), function( i, name ) {
 

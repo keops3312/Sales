@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Sales.Views.AddProductPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             xmlns:i18n= "clr-namespace:Sales.Helpers"
+             Title="{i18n:Translate Products}">
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding AddProduct}"
+                     Padding="5">
+            
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
