@@ -4,12 +4,52 @@
              x:Class="Sales.Views.AddProductPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              xmlns:i18n= "clr-namespace:Sales.Helpers"
-             Title="{i18n:Translate Products}">
+             Title="{i18n:Translate AddProducts}">
     <ContentPage.Content>
-        <StackLayout BindingContext="{Binding AddProduct}"
+        <ScrollView BindingContext="{Binding AddProduct}">
+            <StackLayout 
                      Padding="5">
-            
-            
-        </StackLayout>
+                <Label
+                Text="{i18n:Translate Description}"
+                >
+
+                </Label>
+                <Entry
+                Placeholder="{i18n:Translate DescriptionPlaceholder}"
+                ></Entry>
+                <Label
+                Text="{i18n:Translate Price}"
+                >
+
+                </Label>
+                <Entry
+                Placeholder="{i18n:Translate PricePlaceholder}"
+                Keyboard="Numeric"
+                ></Entry>
+                <Label
+                Text="{i18n:Translate Remarks}"
+                >
+
+                </Label>
+                <Editor
+                VerticalOptions="FillAndExpand"
+                
+                >
+
+                </Editor>
+                <ActivityIndicator></ActivityIndicator>
+                <Button
+                Text="{i18n:Translate Save}"
+                BorderRadius="23"
+                HeightRequest="46"
+                BackgroundColor="Navy"
+                TextColor="White"
+                ></Button>
+
+            </StackLayout>
+
+
+        </ScrollView>
+       
     </ContentPage.Content>
 </ContentPage>
