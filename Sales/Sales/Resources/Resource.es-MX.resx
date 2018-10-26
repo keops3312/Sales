@@ -153,4 +153,40 @@
   <data name="Save" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="ChangeImage" xml:space="preserve">
+    <value>¡toque la imagen para cambiar!</value>
+  </data>
+  <data name="DescriptionError" xml:space="preserve">
+    <value>Debe escribir una descripción</value>
+  </data>
+  <data name="PriceError" xml:space="preserve">
+    <value>¡Debe introducir un precio!</value>
+  </data>
+  <data name="ImageSource" xml:space="preserve">
+    <value>Donde se tomar la foto?!</value>
+  </data>
+  <data name="FromGallery" xml:space="preserve">
+    <value>Elige de la galería</value>
+  </data>
+  <data name="NewPicture" xml:space="preserve">
+    <value>Tomar una nueva imagen</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="DeleteConfirm" xml:space="preserve">
+    <value>Está seguro de eliminar esto?</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
 </root>

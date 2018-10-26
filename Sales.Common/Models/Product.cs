@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,23 +35,27 @@ namespace Sales.Common.Models
         public DateTime PublishOn { get; set; }
 
         [Display(Name ="Image")]
-        public string ImagePath
+        public string ImagePath { get; set; }
+      
+
+
+        public string ImageFullPath
         {
             get
+            {
+                if (string.IsNullOrEmpty(this.ImagePath))
                 {
-                    if (string.IsNullOrEmpty(this.ImagePath))
-                    {
-                         return "noproduct";//aqui iria la imagen por defaul cuanod no tiene iamgen cargada el producto
-                    }
-                return $"http://salesbackend.azurewebsites.net/{this.ImagePath.Substring(1)}"; //para quitarle la berbulilla
-
-
+                    return "noproduct";//aqui iria la imagen por defaul cuanod no tiene iamgen cargada el producto
                 }
+                return $" https://salesapiservices.azurewebsites.net/{this.ImagePath.Substring(1) }"; //para quitarle la berbulilla
+
+
+            }
 
         }
-
-
-        public string ImageFullPath { get; set; }
+        //para tomar la foto por android ios
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
 
         public override string ToString()
         {

@@ -7,6 +7,7 @@ using Sales.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -20,30 +21,41 @@ namespace Sales.ViewModels
         ///   RefreshCommand="{Binding RefreshCommand}" elemento para refresacar
         /// </summary>
 
+        #region Attributes
         private ApiService apiService;
 
         private bool isRefreshing;//Propiedad
 
-        private ObservableCollection<Product> products;
+        private ObservableCollection<ProductItemViewModel> products;
+        #endregion
 
-        public ObservableCollection<Product> Products
+        #region Properties
+        public ObservableCollection<ProductItemViewModel> Products
         {
             get { return this.products; }
             set { this.SetValue(ref this.products, value); }
         }
 
+
+        public List<Product> myProducts { get; set; } 
+
         public bool IsRefreshing
         {
             get { return this.isRefreshing; }
             set { this.SetValue(ref this.isRefreshing, value); }
-        }//el objeto
+        }//el objeto 
+        #endregion
 
+        #region Constructors
         public ProductsViewModel()
         {
+            instance = this;
             this.apiService = new ApiService();
             this.LoadProducts();
         }
+        #endregion
 
+        #region Methods
         private async void LoadProducts()
         {
             this.IsRefreshing = true;
@@ -52,7 +64,7 @@ namespace Sales.ViewModels
             if (!connection.IsSuccess)
             {
                 this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert(Languages.Error,connection.Message,Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
                 return;
             }
 
@@ -63,7 +75,7 @@ namespace Sales.ViewModels
 
             var response = await this.apiService.GetList<Product>
                 (url,
-                 prefix, 
+                 prefix,
                  controller);
 
             if (!response.IsSuccess)
@@ -74,12 +86,47 @@ namespace Sales.ViewModels
                 return;
             }
 
-            var list = (List<Product>)response.Result;
-            this.Products = new ObservableCollection<Product>(list);
+            this.myProducts = (List<Product>)response.Result;
+            this.RefreshList();
+           
+        }
+
+        public void RefreshList()
+        {
+            var mylistProductItemViewModel = myProducts.Select(p => new ProductItemViewModel
+            {
+                Description = p.Description,
+                ImageArray = p.ImageArray,
+                ImagePath = p.ImagePath,
+                IsAvailable = p.IsAvailable,
+                Price = p.Price,
+                ProductId = p.ProductId,
+                PublishOn = p.PublishOn,
+                Remarks = p.Remarks,
+            });
+
+            //var mylist =new List<ProductItemViewModel>();
+            //foreach (var item in list)
+            //{
+            //    mylist.Add(new ProductItemViewModel
+            //        {
+
+
+
+            //        }
+
+            //        );
+            //}
+
+            this.Products = new ObservableCollection<ProductItemViewModel>(
+                mylistProductItemViewModel.OrderBy(p => p.Description));
             this.IsRefreshing = false;
 
         }
 
+        #endregion
+
+        #region Commands
         public ICommand RefreshCommand
         {
             get
@@ -87,5 +134,19 @@ namespace Sales.ViewModels
                 return new RelayCommand(LoadProducts);
             }
         }
+        #endregion
+
+
+        #region Singleton (duvuelve la vista cargada en memoria)
+        private static ProductsViewModel instance;
+        public static ProductsViewModel GetInstance()
+        {
+            if (instance == null)
+            {
+                return new ProductsViewModel();
+            }
+            return instance;
+        }
+        #endregion
     }
 }

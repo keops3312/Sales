@@ -31,6 +31,9 @@ namespace Sales.ViewModels
         public ProductsViewModel Products { get; set; }
 
         public AddProductViewModel AddProduct { get; set; }
+
+
+        public EditProductViewModel EditProduct { get; set; }
         //instanciamos la view model dentro del constructor
         public MainViewModel()
         {
