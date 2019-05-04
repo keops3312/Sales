@@ -16,6 +16,12 @@ namespace Sales.Common.Models
 
         public DateTime PublishOn { get; set; }
 
+        //Esto lo hacemos para devolver un resultado directo
+        public override string ToString()
+        {
+            return this.Description;
+        }
+
 
     }
 }

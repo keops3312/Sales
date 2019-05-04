@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sales.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,9 +12,10 @@ namespace Sales
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new ProductsPage();
         }
 
+        #region Methods
         protected override void OnStart()
         {
             // Handle when your app starts
@@ -27,6 +29,7 @@ namespace Sales
         protected override void OnResume()
         {
             // Handle when your app resumes
-        }
+        } 
+        #endregion
     }
 }
