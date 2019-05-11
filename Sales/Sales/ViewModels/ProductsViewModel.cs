@@ -47,7 +47,7 @@ namespace Sales.ViewModels
         {
 
             var response = await this.apiService.GetList<Product>(
-                "http://localhost:16094",
+                "http://192.168.1.79", //http://localhost:16094
                 "/api",
                 "/Products");
 
