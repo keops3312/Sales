@@ -3,13 +3,56 @@
 namespace Sales.Services
 {
     using Newtonsoft.Json;
+    using Plugin.Connectivity;
     using Sales.Common.Models;
+    using Sales.Helpers;
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
     public class ApiService
     {
+
+        /*Prueba la conexion a internet*/
+        public async Task<Response> CheckConnection()
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return new Response
+                {
+
+                    IsSucces = false,
+                    Message = Languages.TurnOnInternet,
+                };
+            }
+
+            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+
+            if (!isReachable)
+            {
+
+                return new Response
+                {
+                    IsSucces = false,
+                    Message = Languages.CheckInternet,
+
+                };
+            }
+
+            return new Response
+            {
+                IsSucces = true,
+                Message = "ok",
+
+            };
+
+
+
+
+        }
+
+        /*Metodo Get List*/
+
         public async Task<Response> GetList<T>(string urlBase,
             string prefix,string controller)
         {
@@ -17,7 +60,7 @@ namespace Sales.Services
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
-                var url = $"{prefix}, {controller}";//string.Format("{0}{1}", prefix, controller);
+                var url = $"{prefix}{controller}";//string.Format("{0}{1}", prefix, controller);
                 var response = await client.GetAsync(url);
                 var answer = await response.Content.ReadAsStringAsync();
                 //si falla

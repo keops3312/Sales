@@ -8,11 +8,20 @@ namespace Sales
 {
     public partial class App : Application
     {
+        /*ventanas normales*/
+        //public App()
+        //{
+        //    InitializeComponent();
+
+        //    MainPage = new ProductsPage();
+        //}
+
+        /*ventana de navegacion*/
         public App()
         {
             InitializeComponent();
 
-            MainPage = new ProductsPage();
+            MainPage = new NavigationPage(new ProductsPage());
         }
 
         #region Methods
