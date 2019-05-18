@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sales.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Sales.Domain.Models
 
         }
 
-        public System.Data.Entity.DbSet<Sales.Common.Models.Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
+        /*public System.Data.Entity.DbSet<Sales.Common.Models.Product> Products { get; set; }*/
     }
 }

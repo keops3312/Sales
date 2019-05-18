@@ -52,6 +52,7 @@ namespace Sales.ViewModels
         #region Constructor 
         public ProductsViewModel()
         {
+            instance = this;//aqui le digo que la instancia es el form actual
             this.apiService = new ApiService();
             this.LoadProducts();
         }
@@ -61,7 +62,7 @@ namespace Sales.ViewModels
         #region Methods
         private async void LoadProducts()
         {
-            this.isRefreshing = true;
+           this.IsRefreshing = true;
 
             var connection = await this.apiService.CheckConnection();
 
@@ -72,7 +73,7 @@ namespace Sales.ViewModels
                                         Languages.Accept);
 
                 await Application.Current.MainPage.Navigation.PopAsync();/*para desapilar */
-                this.isRefreshing = false;
+                this.IsRefreshing = false;
                 return;
 
             }
@@ -92,16 +93,17 @@ namespace Sales.ViewModels
 
             if (!response.IsSucces)
             {
-                this.isRefreshing = false;
+                this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
                 return;
 
             }
 
-            this.isRefreshing = false;
+            this.IsRefreshing = false;
             var list = (List<Product>)response.Result;
             this.Products = new ObservableCollection<Product>(list);
-           
+            this.IsRefreshing = false;
+
         }
 
         #endregion
@@ -115,6 +117,22 @@ namespace Sales.ViewModels
                 return new RelayCommand(LoadProducts);
             }
         }
+        #endregion
+
+        #region Singleton (para llevar valores entre viewmodels)
+        private static ProductsViewModel instance;
+        public static ProductsViewModel GetInstance()
+        {
+
+            if (instance == null)
+            {
+                return new ProductsViewModel();
+            }
+
+            return instance;
+
+        }
+
         #endregion
 
 

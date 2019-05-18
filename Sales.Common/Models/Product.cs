@@ -16,9 +16,6 @@ namespace Sales.Common.Models
        
         public string Description { get; set; }
 
-
-
-
         [Display(Name = "Remarks")]
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
@@ -34,15 +31,35 @@ namespace Sales.Common.Models
         [DataType(DataType.Date)]
         public DateTime PublishOn { get; set; }
 
-        /*agregando una imagen*/
+        /*agregando una imagen PARA MVC*/
         [Display(Name ="Image")]
         public string ImagePath { get; set; }
+
+        /*agregado una imagen PARA MVVM*/
+        public string ImageFullPath {
+
+
+            get
+            {
+
+                if (string.IsNullOrEmpty(this.ImagePath))
+                {
+
+                    /* return null;*/
+                    return "noImage"; /*el nombre de la iamgen cargada en drawable de android /ios*/
+                }
+                return $"http://192.168.1.79:16005/{this.ImagePath.Substring(1)}";//la ruta del backend
+            }
+
+
+            }
 
         //Esto lo hacemos para devolver un resultado directo
         public override string ToString()
         {
             return this.Description;
         }
+
 
 
     }

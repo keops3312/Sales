@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Error" xml:space="preserve">
-    <value>Erreur (error)</value>
+    <value>Error</value>
   </data>
   <data name="Accept" xml:space="preserve">
-    <value>Accepter</value>
+    <value>Aceptar</value>
   </data>
   <data name="TurnOnInternet" xml:space="preserve">
-    <value>Veuillez activer vos paramètres Internet!</value>
+    <value>Por favor, encienda su configuración de Internet!</value>
   </data>
   <data name="CheckInternet" xml:space="preserve">
-    <value>Vérifiez votre connexion Internet.</value>
+    <value>Comprueba tu conexión a Internet</value>
   </data>
   <data name="Products" xml:space="preserve">
-    <value>Produits</value>
+    <value>Productos</value>
   </data>
   <data name="AddProducts" xml:space="preserve">
-    <value>Ajouter des produits</value>
+    <value>Agregar productos</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Descripción</value>
   </data>
   <data name="DescriptionPlaceHolder" xml:space="preserve">
-    <value>Insérer la description</value>
+    <value>Descripción del postizo</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Tarif</value>
+    <value>Precio</value>
   </data>
   <data name="PricePlaceHolder" xml:space="preserve">
-    <value>Prix d&amp;#39;insertion!</value>
+    <value>Insertar precio!</value>
   </data>
   <data name="Remarks" xml:space="preserve">
-    <value>Remarques :</value>
+    <value>Comentarios</value>
   </data>
   <data name="RemarksPlaceHolder" xml:space="preserve">
-    <value>Insérer des remarques!</value>
+    <value>Insertar observaciones!</value>
   </data>
   <data name="ChangeImage" xml:space="preserve">
-    <value>Touchez l&amp;#39;image pour changer!</value>
+    <value>Toque la imagen para cambiar!</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Enregistrer</value>
+    <value>Guardar</value>
   </data>
   <data name="PriceError" xml:space="preserve">
-    <value>Vous devez saisir un prix supérieur à 0.</value>
+    <value>Debes introducir un precio mayor a cero!</value>
   </data>
   <data name="DescriptionError" xml:space="preserve">
-    <value>Vous devez entrer une description</value>
+    <value>Debe escribir una descripción</value>
   </data>
 </root>

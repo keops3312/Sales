@@ -1,14 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿
 
 namespace Sales.ViewModels
 {
+
+    using GalaSoft.MvvmLight.Command;
+    using Sales.Views;
+    using System.ComponentModel;
+    using System.Windows.Input;
+    using Xamarin.Forms;
     public class MainViewModel:INotifyPropertyChanged
     {
+
+
+
         #region ViewModels
         public ProductsViewModel Products
+        {
+            get; set;
+        }
+
+        public AddProductViewModel AddProduct
         {
             get; set;
         }
@@ -18,6 +29,7 @@ namespace Sales.ViewModels
         public MainViewModel()
         {
             this.Products = new ProductsViewModel();
+            
         }
         #endregion
 
@@ -39,6 +51,25 @@ namespace Sales.ViewModels
 
 
 
+        #endregion
+
+        #region Commands
+        public ICommand AddProductCommand
+        {
+            get
+            {
+                return new RelayCommand(GoToAddProduct);
+            }
+
+        }
+        #endregion
+
+        #region Methods
+        private async void GoToAddProduct()
+        {
+            this.AddProduct = new AddProductViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new AddProductPage());
+        }
         #endregion
 
 
