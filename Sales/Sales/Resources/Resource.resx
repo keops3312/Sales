@@ -165,4 +165,16 @@
   <data name="DescriptionError" xml:space="preserve">
     <value>You must enter a description</value>
   </data>
+  <data name="ImageSource" xml:space="preserve">
+    <value>Where do you take the picture?</value>
+  </data>
+  <data name="Fromgallery" xml:space="preserve">
+    <value>From gallery</value>
+  </data>
+  <data name="NewPicture" xml:space="preserve">
+    <value>Take a new picture</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
 </root>

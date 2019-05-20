@@ -4,6 +4,8 @@ namespace Sales.Common.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Product
     {
         [Key]
@@ -48,7 +50,9 @@ namespace Sales.Common.Models
                     /* return null;*/
                     return "noImage"; /*el nombre de la iamgen cargada en drawable de android /ios*/
                 }
-                return $"http://192.168.1.79:16005/{this.ImagePath.Substring(1)}";//la ruta del backend
+                // return $"http://192.168.1.79:16005/{this.ImagePath.Substring(1)}";//la ruta del backend pero como ya vamos con la api la cambiamos por la API
+
+                return $"http://192.168.1.79:16094/{this.ImagePath.Substring(1)}";
             }
 
 
@@ -59,6 +63,10 @@ namespace Sales.Common.Models
         {
             return this.Description;
         }
+
+        /*PARA LA WEBCAM DEL ANDROID*/
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
 
 
 

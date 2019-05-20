@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Sales.Common.Models;
 using Sales.Helpers;
 using Sales.Services;
@@ -23,7 +25,11 @@ namespace Sales.ViewModels
         private string price ; 
         private string remarks; 
         private bool isRunning; 
-        private bool isEnabled; 
+        private bool isEnabled;
+
+        private ImageSource imageSource;
+
+        private MediaFile file;
         #endregion
 
         #region Properties
@@ -89,13 +95,30 @@ namespace Sales.ViewModels
             }
         }
 
+
+        public ImageSource ImageSource
+        {
+            get
+            {
+                return this.imageSource;
+            }
+            set
+            {
+                SetValue(ref this.imageSource, value);
+            }
+        }
+
+      
+
         #endregion
 
         #region Constructors
         public AddProductViewModel()
         {
-            this.IsEnabled = true;
+            
             this.apiService = new ApiService();
+            this.IsEnabled = true;
+            this.ImageSource = "noImage";
         }
         #endregion
 
@@ -107,6 +130,15 @@ namespace Sales.ViewModels
                 return new RelayCommand(Save);
             }
         }
+
+        public ICommand ChangeImageCommand
+        {
+            get
+            {
+                return new RelayCommand(ChangeImage);
+            }
+        }
+
 
         #endregion
 
@@ -164,22 +196,30 @@ namespace Sales.ViewModels
                 return;
 
             }
-
-
+          
             var url = Application.Current.Resources["UrlAPI"].ToString();
             var prefix = Application.Current.Resources["UrlPrefix"].ToString();
             var controller = Application.Current.Resources["UrlProductsController"].ToString();
 
 
+            /*para la camara*/
+
+            byte[] imageArray = null;
+            if (this.file != null)
+            {
+                imageArray = FilesHelper.ReadFully(this.file.GetStream());
+            }
+
             var product = new Product
             {
-                Description=this.Description,
-                Price=price,/*lo hicimos variable*/
-                Remarks=this.Remarks,
+                Description = this.Description,
+                Price = price,
+                Remarks = this.Remarks,
+                ImageArray = imageArray,
                 PublishOn=DateTime.Now,
-                //falta fecha, isavaliable,la imagen
-
             };
+
+
 
             var response = await this.apiService.Post(
                 url, /*"http://192.168.1.79:16094*/
@@ -213,6 +253,54 @@ namespace Sales.ViewModels
 
 
         }
+
+
+
+        /*Para tomar las fotos*/
+
+        private async void ChangeImage()
+        {
+            await CrossMedia.Current.Initialize();
+
+            var source = await Application.Current.MainPage.DisplayActionSheet(
+                Languages.ImageSource,
+                Languages.Cancel,
+                null,
+                Languages.FromGallery,
+                Languages.NewPicture);
+
+            if (source == Languages.Cancel)
+            {
+                this.file = null;
+                return;
+            }
+
+            if (source == Languages.NewPicture)
+            {
+                this.file = await CrossMedia.Current.TakePhotoAsync(
+                    new StoreCameraMediaOptions
+                    {
+                        Directory = "Sample",
+                        Name = "test.jpg",
+                        PhotoSize = PhotoSize.Small,
+                    }
+                );
+            }
+            else
+            {
+                this.file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (this.file != null)
+            {
+                this.ImageSource = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+            }
+        }
+
 
         #endregion
 

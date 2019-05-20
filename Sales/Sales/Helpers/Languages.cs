@@ -104,6 +104,31 @@ namespace Sales.Helpers
 
 
 
+        public static string ImageSource
+        {
+            get { return Resource.ImageSource; }
+        }
+
+        public static string FromGallery
+        {
+            get { return Resource.Fromgallery; }
+        }
+
+        public static string NewPicture
+        {
+            get { return Resource.NewPicture; }
+        }
+
+        public static string Cancel
+        {
+            get { return Resource.Cancel; }
+        }
+
+
+
+
+
+
 
     }
 
