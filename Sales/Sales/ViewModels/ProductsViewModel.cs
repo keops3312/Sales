@@ -5,6 +5,7 @@ using Sales.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -18,12 +19,26 @@ namespace Sales.ViewModels
         #endregion
 
         #region attributes
-        private ObservableCollection<Product> products;
+        /*private ObservableCollection<Product> products; originalmete para solo mostrar una lista sin funciones*/
         private bool isRefreshing;
+
+
+        private ObservableCollection<ProductItemViewModel> products;
         #endregion
 
         #region Properties
-        public ObservableCollection<Product> Products
+        /*  public ObservableCollection<Product> Products
+          {
+              get
+              {
+                  return this.products;
+              }
+              set
+              {
+                  SetValue(ref this.products, value);
+              }
+          }*/
+        public ObservableCollection<ProductItemViewModel> Products
         {
             get
             {
@@ -101,7 +116,34 @@ namespace Sales.ViewModels
 
             this.IsRefreshing = false;
             var list = (List<Product>)response.Result;
-            this.Products = new ObservableCollection<Product>(list);
+
+            var myList = list.Select(p => new ProductItemViewModel
+            {
+
+                Description=p.Description,
+                ImageArray=p.ImageArray,
+                ImagePath=p.ImagePath,
+                IsAvailable=p.IsAvailable,
+                Price=p.Price,
+                ProductId=p.ProductId,
+                PublishOn=p.PublishOn,
+                Remarks=p.Remarks,
+
+            });
+
+            /*para funciones ne lista*/
+            //var myList = new List<ProductItemViewModel>();
+            //foreach (var item in list)
+            //{
+            //    myList.Add(new ProductItemViewModel {
+
+
+
+
+            //    });
+            //}
+            /**/
+            this.Products = new ObservableCollection<ProductItemViewModel>(myList);
             this.IsRefreshing = false;
 
         }

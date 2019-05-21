@@ -242,7 +242,18 @@ namespace Sales.ViewModels
 
             var newProduct = (Product)response.Result; /*locasteamos*/
             var viewModel = ProductsViewModel.GetInstance();/*de esta manera se actualiza la lista de productos cuandose agraga uno nuevo*/
-            viewModel.Products.Add(newProduct);/*y se realiza para no volver ha realizar un llamado al server*/
+            viewModel.Products.Add(new ProductItemViewModel
+            {
+                Description = newProduct.Description,
+                ImageArray = newProduct.ImageArray,
+                ImagePath = newProduct.ImagePath,
+                IsAvailable = newProduct.IsAvailable,
+                Price = newProduct.Price,
+                ProductId = newProduct.ProductId,
+                PublishOn = newProduct.PublishOn,
+                Remarks = newProduct.Remarks,
+            });
+           // viewModel.Products.Add(newProduct);/*y se realiza para no volver ha realizar un llamado al server*/
             
 
             this.isRunning = false;

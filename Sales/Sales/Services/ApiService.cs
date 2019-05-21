@@ -158,5 +158,59 @@ namespace Sales.Services
         }
 
 
+
+
+
+        /*Metodo Delete Object*/
+        public async Task<Response> Delete(string urlBase,
+            string prefix, string controller, int id)
+        {
+            try
+            {
+
+
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = $"{prefix}{controller}/{id}";//string.Format("{0}{1}", prefix, controller);
+                var response = await client.DeleteAsync(url);
+                var answer = await response.Content.ReadAsStringAsync();
+                //si falla
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+
+                        IsSucces = false,
+                        Message = answer,
+
+                    };
+                }
+                //si es exitoso
+               
+                return new Response
+                {
+
+                    IsSucces = true,
+                  
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+
+                    IsSucces = false,
+                    Message = ex.Message,
+
+                };
+            }
+
+
+        }
+
+
+
     }
 }
