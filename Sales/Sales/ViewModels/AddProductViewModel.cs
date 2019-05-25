@@ -224,7 +224,7 @@ namespace Sales.ViewModels
             var response = await this.apiService.Post(
                 url, /*"http://192.168.1.79:16094*/
                prefix,/*/api*/
-               controller,product);/*Products*/
+               controller,product, Settings.TokenType, Settings.AccesToken);/*Products*/
 
 
 
@@ -241,27 +241,32 @@ namespace Sales.ViewModels
 
 
             var newProduct = (Product)response.Result; /*locasteamos*/
-            var viewModel = ProductsViewModel.GetInstance();/*de esta manera se actualiza la lista de productos cuandose agraga uno nuevo*/
-            viewModel.Products.Add(new ProductItemViewModel
-            {
-                Description = newProduct.Description,
-                ImageArray = newProduct.ImageArray,
-                ImagePath = newProduct.ImagePath,
-                IsAvailable = newProduct.IsAvailable,
-                Price = newProduct.Price,
-                ProductId = newProduct.ProductId,
-                PublishOn = newProduct.PublishOn,
-                Remarks = newProduct.Remarks,
-            });
+            var productsViewModel = ProductsViewModel.GetInstance();/*de esta manera se actualiza la lista de productos cuandose agraga uno nuevo*/
+
+            productsViewModel.MyProducts.Add(newProduct);
+
+            productsViewModel.RefreshList();
+
+
+            //productsViewModel.Products.Add(new ProductItemViewModel
+            //{
+            //    Description = newProduct.Description,
+            //    ImageArray = newProduct.ImageArray,
+            //    ImagePath = newProduct.ImagePath,
+            //    IsAvailable = newProduct.IsAvailable,
+            //    Price = newProduct.Price,
+            //    ProductId = newProduct.ProductId,
+            //    PublishOn = newProduct.PublishOn,
+            //    Remarks = newProduct.Remarks,
+            //});
            // viewModel.Products.Add(newProduct);/*y se realiza para no volver ha realizar un llamado al server*/
             
 
             this.isRunning = false;
             this.isEnabled = true;
 
-            await Application.Current.MainPage.Navigation.PopAsync();/*para desapilar */
-
-
+            //await Application.Current.MainPage.Navigation.PopAsync();/*para desapilar */
+            await App.Navigator.PopAsync();
 
         }
 

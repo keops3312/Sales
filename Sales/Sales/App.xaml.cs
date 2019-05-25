@@ -1,4 +1,6 @@
-﻿using Sales.Views;
+﻿using Sales.Helpers;
+using Sales.ViewModels;
+using Sales.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,6 +10,8 @@ namespace Sales
 {
     public partial class App : Application
     {
+        public static NavigationPage Navigator { get; internal set; }
+
         /*ventanas normales*/
         //public App()
         //{
@@ -21,7 +25,24 @@ namespace Sales
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ProductsPage());
+
+            if (Settings.IsRemembered && !string.IsNullOrEmpty(Settings.AccesToken))
+            {
+
+                MainViewModel.GetInstance().Products = new ProductsViewModel();
+                MainPage =new MasterPage();/*new NavigationPage(new ProductsPage());*/
+            }
+            else
+            {
+                MainViewModel.GetInstance().Login = new LoginViewModel();
+                MainPage = new NavigationPage(new LoginPage());
+
+            }
+            ////MainPage = new NavigationPage(new ProductsPage());
+
+            //MainViewModel.GetInstance().Login = new LoginViewModel();
+            //MainPage = new NavigationPage(new LoginPage());
+            ////MainPage = new LoginPage();
         }
 
         #region Methods

@@ -50,9 +50,9 @@ namespace Sales.Common.Models
                     /* return null;*/
                     return "noImage"; /*el nombre de la iamgen cargada en drawable de android /ios*/
                 }
-                // return $"http://192.168.1.79:16005/{this.ImagePath.Substring(1)}";//la ruta del backend pero como ya vamos con la api la cambiamos por la API
+                /* return http://192.168.1.79:16005/{this.ImagePath.Substring(1)} la ruta del backend pero como ya vamos con la api la cambiamos por la API*/
 
-                return $"http://192.168.1.79:16094/{this.ImagePath.Substring(1)}";
+                return $"http://192.168.1.79:16094/{this.ImagePath.Substring(2)}";
             }
 
 

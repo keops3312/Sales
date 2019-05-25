@@ -15,7 +15,7 @@ namespace Sales.API.Controllers
     using Sales.Common.Models;
     using Sales.Domain.Models;
    
-
+    [Authorize]
     public class ProductsController : ApiController
     {
         private DataContext db = new DataContext();
@@ -52,6 +52,29 @@ namespace Sales.API.Controllers
             {
                 return BadRequest();
             }
+            
+            /*para subir imagenes desde android*/
+            if (product.ImageArray != null && product.ImageArray.Length > 0)
+            {
+                var stream = new MemoryStream(product.ImageArray);
+                var guid = Guid.NewGuid().ToString();
+                var file = $"{guid}.jpg";
+                var folder = "~/Content/Products";
+                var fullPath = $"{folder}/{file}";
+                var response = FilesHelper.UploadPhoto(stream, folder, file);
+
+                if (response)
+                {
+                    product.ImagePath = fullPath;
+                }
+            }
+
+
+
+
+
+
+
 
             db.Entry(product).State = EntityState.Modified;
 
@@ -71,7 +94,7 @@ namespace Sales.API.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(product);// StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Products

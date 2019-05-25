@@ -6,6 +6,7 @@ namespace Sales.ViewModels
     using Sales.Common.Models;
     using Sales.Helpers;
     using Sales.Services;
+    using Sales.Views;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,9 +17,9 @@ namespace Sales.ViewModels
     public class ProductItemViewModel:Product
     {
 
-
-
+        #region Services
         private ApiService apiService;
+        #endregion
 
         #region Commands
         public ICommand DeleteProductCommand
@@ -30,23 +31,46 @@ namespace Sales.ViewModels
             }
            
 
+
         }
+
+
+        public ICommand EditProductCommand
+        {
+
+            get
+            {
+                return new RelayCommand(EditProduct);
+            }
+        }
+
+
 
 
         #endregion
 
+        #region Constructors
         public ProductItemViewModel()
         {
             this.apiService = new ApiService();
         }
+        #endregion
 
+        #region Methods
+
+        private async void EditProduct()
+        {
+            MainViewModel.GetInstance().EditProduct = new EditProductViewModel(this);
+            //await Application.Current.MainPage.Navigation.PushAsync(new EditProductPage());
+            await App.Navigator.PushAsync(new EditProductPage());
+        }
 
         private async void DeleteProduct()
         {
             var answer = await Application.Current.MainPage.DisplayAlert(
-                Languages.Delete, 
-                Languages.DeleteConfirmed, 
-                Languages.Yes, 
+                Languages.Delete,
+                Languages.DeleteConfirmed,
+                Languages.Yes,
                 Languages.No);
 
 
@@ -64,7 +88,7 @@ namespace Sales.ViewModels
                                         connection.Message,
                                         Languages.Accept);
 
-                await Application.Current.MainPage.Navigation.PopAsync();/*para desapilar */
+               
                 return;
 
             }
@@ -77,7 +101,18 @@ namespace Sales.ViewModels
             var response = await this.apiService.Delete(
                 url, /*"http://192.168.1.79:16094*/
                prefix,/*/api*/
-               controller,this.ProductId);/*Products*/
+               controller, this.ProductId, Settings.TokenType, Settings.AccesToken);/*Products*/
+
+
+            if (!response.IsSucces)
+            {
+                
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
+                return;
+
+            }
+
+
 
             var productsViewModel = ProductsViewModel.GetInstance();
             var deleteProduct = productsViewModel.Products.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
@@ -90,6 +125,7 @@ namespace Sales.ViewModels
 
 
 
-        }
+        } 
+        #endregion
     }
 }

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main,Source={StaticResource Locator}}"
+             xmlns:i18n="clr-namespace:Sales.Helpers"
+             x:Class="Sales.Views.EditProductPage"
+             Title="{i18n:Translate EditProducts}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BindingContext="{Binding EditProduct}"
+                     Padding="10"
+                    >
+                <Image Source="{Binding ImageSource}" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label Text="{i18n:Translate ChangeImage}"
+                   FontSize="Small"
+                   HorizontalOptions="Center"
+                   ></Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Text="{i18n:Translate Description}"/>
+                    <Entry Grid.Column="1"
+                           Grid.Row="0"
+                           Text="{Binding Product.Description,Mode=TwoWay}"
+                           Placeholder="{i18n:Translate DescriptionPlaceHolder}"
+                           />
+
+                    <Label Grid.Column="0"
+                           Grid.Row="1"
+                           Text="{i18n:Translate Price}"/>
+                    <Entry Grid.Column="1"
+                           Grid.Row="1"
+                           Keyboard="Numeric"
+                           Text="{Binding Product.Price,Mode=TwoWay}"
+                           Placeholder="{i18n:Translate PricePlaceHolder}"/>
+
+                    <Label  Grid.Column="0"
+                            Grid.Row="2"
+                            Text="{i18n:Translate Remarks}"/>
+                    <Editor Grid.Column="1"
+                            Grid.Row="2"
+                            Text="{Binding Product.Remarks,Mode=TwoWay}"
+                            VerticalOptions="FillAndExpand"
+                            Placeholder="{i18n:Translate RemarksPlaceHolder}"/>
+
+                    <Label  Grid.Column="0"
+                            Grid.Row="3"
+                            Text="{i18n:Translate IsAvailable}"/>
+                    <Switch Grid.Column="1"
+                            Grid.Row="3"
+                            HorizontalOptions="End"
+                            IsToggled="{Binding Product.IsAvailable}"
+                            VerticalOptions="FillAndExpand"
+                            />
+
+
+
+                </Grid>
+
+
+
+                <ActivityIndicator 
+                    IsRunning="{Binding IsRunning}"
+                    VerticalOptions="Center"/>
+                <StackLayout Orientation="Horizontal">
+                    <Button
+                     BackgroundColor="Navy"
+                    Text="{i18n:Translate Save}"
+                    BorderRadius="23"
+                    HeightRequest="46"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsEnabled}"
+                    Command="{Binding SaveCommand}"/>
+                    <Button
+                     BackgroundColor="Red"
+                    Text="{i18n:Translate Delete}"
+                    BorderRadius="23"
+                    HeightRequest="46"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="White"
+                    IsEnabled="{Binding IsEnabled}"
+                    Command="{Binding DeleteCommand}"/>
+
+
+
+                </StackLayout>
+               
+
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
