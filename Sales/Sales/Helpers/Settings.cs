@@ -24,6 +24,7 @@ namespace Sales.Helpers
         private const string isRemembered = "IsRemembered";/*aqui le coloco el paramtreo a copiar para concatenar*/
         private static readonly string stringDefault = string.Empty;
         private static readonly bool booleanDefault = false;
+        private const string userASP = "UserASP";
 
         #endregion
 
@@ -63,6 +64,20 @@ namespace Sales.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue(isRemembered, value);
+            }
+        }
+
+
+
+        public static string UserASP
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(tokenType, stringDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(userASP, value);
             }
         }
 

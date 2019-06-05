@@ -4,6 +4,7 @@ namespace Sales.ViewModels
 {
 
     using GalaSoft.MvvmLight.Command;
+    using Sales.Common.Models;
     using Sales.Helpers;
     using Sales.Views;
     using System.Collections.ObjectModel;
@@ -17,6 +18,61 @@ namespace Sales.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
+
+
+        public MyUserASP UserASP { get; set; }
+
+
+        public string UserFullName
+        {
+            get
+            {
+                if (this.UserASP != null && this.UserASP.Claims != null && this.UserASP.Claims.Count > 1)
+                {
+                    return $"{this.UserASP.Claims[0].ClaimValue} {this.UserASP.Claims[1].ClaimValue}";
+                }
+
+                return null;
+            }
+        }
+
+
+        //public string UserImageFullPath
+        //{
+        //    get
+        //    {
+        //        if (this.UserASP != null && this.UserASP.Claims != null && this.UserASP.Claims.Count > 3)
+        //        {
+        //            return $"http://192.168.1.79{this.UserASP.Claims[3].ClaimValue.Substring(1) }";
+        //        }
+
+        //        return null;
+        //    }
+        //}
+
+
+        public string UserImageFullPath
+        {
+            get
+            {
+                foreach (var claim in this.UserASP.Claims)
+                {
+                    if (claim.ClaimType == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri")
+                    {
+                        if (claim.ClaimValue.StartsWith("~"))
+                        {
+                            return $"http://192.168.1.79{claim.ClaimValue.Substring(1)}";
+                        }
+
+                        return claim.ClaimValue;
+                    }
+                }
+
+                return null;
+            }
+        }
+
+
         #endregion
 
         #region ViewModels

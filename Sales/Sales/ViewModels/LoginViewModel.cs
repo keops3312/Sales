@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Newtonsoft.Json;
+using Sales.Common.Models;
 using Sales.Helpers;
 using Sales.Services;
 using Sales.Views;
@@ -194,10 +196,27 @@ namespace Sales.ViewModels
             Settings.AccesToken = token.AccessToken;
             Settings.IsRemembered = this.IsRemembered;
 
-            this.IsRunning = false;
-            this.IsEnabled = true;
+
+            /**/
+            var prefix = Application.Current.Resources["UrlPrefix"].ToString();
+            var controller = Application.Current.Resources["UrlUsersController"].ToString();
+            var response = await this.apiService.GetUser(url, prefix, $"{controller}/GetUser", this.Email, token.TokenType, token.AccessToken);
+            if (response.IsSucces)
+            {
+                var userASP = (MyUserASP)response.Result;
+                MainViewModel.GetInstance().UserASP = userASP;
+                Settings.UserASP = JsonConvert.SerializeObject(userASP);
+            }
+
+
+            /**/
+           
             MainViewModel.GetInstance().Products = new ProductsViewModel();
             Application.Current.MainPage = new MasterPage();//ProductsPage();
+
+
+            this.IsRunning = false;
+            this.IsEnabled = true;
         }
 
         public ICommand RegisterCommand
@@ -222,9 +241,25 @@ namespace Sales.ViewModels
             }
         }
 
-        private void LoginFacebook()
+        private async void LoginFacebook()
         {
-            throw new NotImplementedException();
+           
+                var connection = await this.apiService.CheckConnection();
+
+                if (!connection.IsSucces)
+                {
+                    this.IsRunning = false;
+                    this.IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
+                        Languages.Error,
+                        connection.Message,
+                        Languages.Accept);
+                    return;
+                }
+
+                await Application.Current.MainPage.Navigation.PushAsync(
+                    new LoginFacebookPage());
+           
         }
 
         public ICommand LoginTwitterComand
@@ -235,9 +270,24 @@ namespace Sales.ViewModels
             }
         }
 
-        private void LoginTwitter()
+        private async void LoginTwitter()
         {
-            throw new NotImplementedException();
+            var connection = await this.apiService.CheckConnection();
+
+            if (!connection.IsSucces)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
+                return;
+            }
+
+            await Application.Current.MainPage.Navigation.PushAsync(
+                new LoginTwitterPage());
+
         }
 
         public ICommand LoginInstagramComand
@@ -248,9 +298,24 @@ namespace Sales.ViewModels
             }
         }
 
-        private void LoginInstagram()
+        private async void LoginInstagram()
         {
-            throw new NotImplementedException();
+            var connection = await this.apiService.CheckConnection();
+
+            if (!connection.IsSucces)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
+                return;
+            }
+
+            await Application.Current.MainPage.Navigation.PushAsync(
+                new LoginInstagramPage());
+
         }
 
         #endregion
