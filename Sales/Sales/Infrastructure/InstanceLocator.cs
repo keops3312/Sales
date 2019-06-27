@@ -1,10 +1,9 @@
-﻿using Sales.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace Sales.Infrastructure
 {
+
+    using Sales.ViewModels;
     public class InstanceLocator
     {
         #region Properties

@@ -33,6 +33,12 @@ namespace Sales.Common.Models
         [DataType(DataType.Date)]
         public DateTime PublishOn { get; set; }
 
+
+        [Required]
+        [StringLength(128)]
+        public string UserId { get; set; }
+
+
         /*agregando una imagen PARA MVC*/
         [Display(Name ="Image")]
         public string ImagePath { get; set; }
